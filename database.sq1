@@ -1,0 +1,78 @@
+CREATE DATABASE IF NOT EXISTS web_tracker;
+USE web_tracker;
+
+-- मुख्य लोकेशन टेबल
+CREATE TABLE IF NOT EXISTS locations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    visitor_id VARCHAR(50) NOT NULL,
+    latitude DOUBLE NOT NULL,
+    longitude DOUBLE NOT NULL,
+    accuracy FLOAT DEFAULT 0,
+    altitude FLOAT DEFAULT 0,
+    speed FLOAT DEFAULT 0,
+    heading FLOAT DEFAULT 0,
+    -- IP लोकेशन (फॉलबैक)
+    ip VARCHAR(45),
+    ip_lat DOUBLE DEFAULT 0,
+    ip_lng DOUBLE DEFAULT 0,
+    ip_city VARCHAR(100),
+    ip_country VARCHAR(100),
+    ip_isp VARCHAR(200),
+    -- डिवाइस इंफो
+    user_agent TEXT,
+    platform VARCHAR(50),
+    language VARCHAR(20),
+    screen VARCHAR(20),
+    timezone VARCHAR(50),
+    battery VARCHAR(20),
+    page_url TEXT,
+    timestamp INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_visitor (visitor_id),
+    INDEX idx_time (timestamp)
+);
+
+-- फॉलबैक लॉग
+CREATE TABLE IF NOT EXISTS fallback_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    visitor_id VARCHAR(50),
+    reason VARCHAR(100),
+    ip VARCHAR(45),
+    ip_lat DOUBLE DEFAULT 0,
+    ip_lng DOUBLE DEFAULT 0,
+    ip_city VARCHAR(100),
+    ip_country VARCHAR(100),
+    user_agent TEXT,
+    platform VARCHAR(50),
+    language VARCHAR(20),
+    screen VARCHAR(20),
+    timezone VARCHAR(50),
+    timestamp INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- विज़िटर्स टेबल
+CREATE TABLE IF NOT EXISTS visitors (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    visitor_id VARCHAR(50) UNIQUE,
+    ip VARCHAR(45),
+    first_seen INT,
+    last_seen INT,
+    visit_count INT DEFAULT 1,
+    battery_level INT DEFAULT -1,
+    battery_charging BOOLEAN DEFAULT FALSE,
+    has_location BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_visitor (visitor_id)
+);
+
+-- क्लिक ट्रैकिंग
+CREATE TABLE IF NOT EXISTS clicks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    visitor_id VARCHAR(50),
+    x INT,
+    y INT,
+    page_url TEXT,
+    timestamp INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
